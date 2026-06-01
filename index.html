@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>LA FLAME ANNIVERSARY QUIZ</title>
+  <meta name="description" content="LA FLAME 周年記念クイズ。全12問に挑戦して景品をGET。" />
+  <link rel="icon" href="assets/flame.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="app">
+    <!-- ブランドヘッダー -->
+    <header class="brand">
+      <img class="brand__flame" src="assets/flame.svg" alt="" />
+      <h1 class="brand__name">LA FLAME</h1>
+      <p class="brand__sub">ANNIVERSARY QUIZ</p>
+    </header>
+
+    <!-- スタート画面 -->
+    <section class="screen start is-active" id="screen-start">
+      <h2 class="start__title">周年記念クイズ</h2>
+      <p class="start__lead">全12問の4択クイズ。<br>正解数に応じて景品をプレゼント!</p>
+      <ul class="rules">
+        <li>全部で 12 問・各 4 択です</li>
+        <li>一度選ぶと「次へ」で進みます</li>
+        <li>最後に正解数だけ表示されます</li>
+        <li>結果画面をスタッフにお見せください</li>
+      </ul>
+      <button class="btn btn--primary btn--block" id="start-btn">START</button>
+    </section>
+
+    <!-- クイズ画面 -->
+    <section class="screen quiz" id="screen-quiz">
+      <div class="quiz__top">
+        <div class="progress">
+          <span class="progress__count"><b id="q-current">1</b> / <span id="q-total">12</span></span>
+          <span class="progress__label">QUESTION</span>
+        </div>
+        <div class="bar"><div class="bar__fill" id="bar-fill"></div></div>
+      </div>
+
+      <p class="question" id="question"></p>
+      <div class="choices" id="choices"></div>
+
+      <div class="quiz__nav">
+        <button class="btn btn--primary btn--block" id="next-btn" disabled>次へ</button>
+      </div>
+    </section>
+
+    <!-- 結果画面 -->
+    <section class="screen result" id="screen-result">
+      <p class="result__label" id="result-tier-label">RESULT</p>
+      <p class="result__tier" id="result-tier"></p>
+      <div class="score">
+        <span class="score__num" id="score-num">0</span>
+        <span class="score__total" id="score-total">/ 12</span>
+        <span class="score__unit">問正解</span>
+      </div>
+      <p class="result__desc" id="result-desc"></p>
+      <p class="result__note">※どの問題が正解だったかは表示されません。</p>
+      <button class="result__retry" id="retry-btn">もう一度最初から</button>
+    </section>
+
+    <footer class="foot">LA FLAME &middot; KOBE SHISHA CAFE &amp; BAR</footer>
+  </main>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

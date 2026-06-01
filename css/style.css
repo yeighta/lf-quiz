@@ -1,0 +1,385 @@
+/* ============================================================
+ *  LF QUIZ - スタイル
+ *  ブランドイメージ: ブラック基調 + クリーム/ゴールドの線
+ *  スマホ利用前提のモバイルファースト
+ * ============================================================ */
+
+:root {
+  --bg: #0a0a0a;
+  --bg-elev: #141414;
+  --line: rgba(216, 200, 168, 0.25);
+  --cream: #e8dfce;
+  --cream-dim: #b8ad97;
+  --gold: #c8a96a;
+  --accent: #d8c8a8;
+  --correct-hint: rgba(216, 200, 168, 0.14);
+  --radius: 14px;
+  --maxw: 520px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(200, 169, 106, 0.12), transparent 55%),
+    var(--bg);
+  color: var(--cream);
+  font-family: "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, "Yu Gothic",
+    sans-serif;
+  min-height: 100dvh;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+.app {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- ブランドヘッダー ---------- */
+.brand {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.brand__flame {
+  width: 52px;
+  height: auto;
+  color: var(--cream);
+  margin: 0 auto 8px;
+  display: block;
+}
+
+.brand__name {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+  margin: 0;
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.brand__sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--cream-dim);
+  margin: 6px 0 0;
+}
+
+/* ---------- 画面共通 ---------- */
+.screen {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  animation: fade 0.4s ease;
+}
+
+.screen.is-active {
+  display: flex;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- スタート画面 ---------- */
+.start {
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.start__title {
+  font-family: "Georgia", serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.2em;
+  margin: 0 0 4px;
+  color: var(--cream);
+}
+
+.start__lead {
+  color: var(--cream-dim);
+  font-size: 0.95rem;
+  margin: 0 auto 22px;
+  max-width: 320px;
+}
+
+.rules {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 30px;
+  max-width: 340px;
+  text-align: left;
+  border-top: 1px solid var(--line);
+}
+
+.rules li {
+  padding: 13px 4px 13px 22px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--cream);
+  position: relative;
+}
+
+.rules li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 21px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ---------- ボタン ---------- */
+.btn {
+  appearance: none;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--cream);
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  padding: 15px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.08s ease;
+  font-family: "Georgia", serif;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: var(--gold);
+  color: #1a1206;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+.btn--block {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ---------- クイズ画面 ---------- */
+.quiz__top {
+  margin-bottom: 18px;
+}
+
+.progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.progress__count {
+  font-family: "Georgia", serif;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+}
+
+.progress__count b {
+  font-size: 1.4rem;
+  color: var(--gold);
+}
+
+.progress__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--cream-dim);
+}
+
+.bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar__fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  transition: width 0.35s ease;
+}
+
+.question {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 18px 0 24px;
+  color: var(--cream);
+  min-height: 3.2em;
+  display: flex;
+  align-items: center;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice {
+  appearance: none;
+  text-align: left;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  color: var(--cream);
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.08s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.choice__mark {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-family: "Georgia", serif;
+  font-size: 0.85rem;
+  color: var(--cream-dim);
+  transition: inherit;
+}
+
+.choice:active {
+  transform: scale(0.99);
+}
+
+.choice.is-selected {
+  border-color: var(--gold);
+  background: var(--correct-hint);
+}
+
+.choice.is-selected .choice__mark {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1206;
+}
+
+.quiz__nav {
+  margin-top: 26px;
+}
+
+/* ---------- 結果画面 ---------- */
+.result {
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.result__label {
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  color: var(--cream-dim);
+  margin: 0 0 14px;
+}
+
+.result__tier {
+  font-family: "Georgia", serif;
+  font-size: 2rem;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+  margin: 0;
+}
+
+.score {
+  margin: 24px auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: "Georgia", serif;
+}
+
+.score__num {
+  font-size: 4.2rem;
+  line-height: 1;
+  color: var(--cream);
+}
+
+.score__total {
+  font-size: 1.4rem;
+  color: var(--cream-dim);
+}
+
+.score__unit {
+  font-size: 0.9rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.1em;
+  margin-left: 4px;
+}
+
+.result__desc {
+  color: var(--cream);
+  font-size: 0.95rem;
+  max-width: 340px;
+  margin: 0 auto 8px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  line-height: 1.7;
+}
+
+.result__note {
+  color: var(--cream-dim);
+  font-size: 0.78rem;
+  margin: 16px auto 28px;
+  max-width: 320px;
+}
+
+.result__retry {
+  background: none;
+  border: none;
+  color: var(--cream-dim);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  margin-top: 18px;
+}
+
+/* ---------- フッター ---------- */
+.foot {
+  text-align: center;
+  font-size: 0.66rem;
+  letter-spacing: 0.25em;
+  color: rgba(184, 173, 151, 0.5);
+  margin-top: 30px;
+}
+
+@media (min-height: 760px) {
+  .app { padding-top: 44px; }
+}
