@@ -54,29 +54,23 @@ body {
   margin-bottom: 24px;
 }
 
-.brand__flame {
-  width: 52px;
-  height: auto;
-  color: var(--cream);
-  margin: 0 auto 8px;
-  display: block;
+.brand__logo {
+  margin: 0;
+  line-height: 0;
 }
 
-.brand__name {
-  font-family: "Georgia", "Times New Roman", serif;
-  font-size: 1.25rem;
-  letter-spacing: 0.5em;
-  text-indent: 0.5em;
-  margin: 0;
-  font-weight: 400;
-  color: var(--cream);
+.brand__logo img {
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .brand__sub {
   font-size: 0.7rem;
   letter-spacing: 0.3em;
   color: var(--cream-dim);
-  margin: 6px 0 0;
+  margin: 4px 0 0;
 }
 
 /* ---------- 画面共通 ---------- */
