@@ -300,16 +300,8 @@ body {
   margin: 0 0 14px;
 }
 
-.result__tier {
-  font-family: "Georgia", serif;
-  font-size: 2rem;
-  letter-spacing: 0.16em;
-  color: var(--gold);
-  margin: 0;
-}
-
 .score {
-  margin: 24px auto;
+  margin: 14px auto 24px;
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
@@ -334,9 +326,9 @@ body {
   margin-left: 4px;
 }
 
-.result__desc {
+.result__lead {
   color: var(--cream);
-  font-size: 0.95rem;
+  font-size: 1rem;
   max-width: 340px;
   margin: 0 auto 8px;
   background: var(--bg-elev);

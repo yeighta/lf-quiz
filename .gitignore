@@ -1,0 +1,5 @@
+# 平文の正解を含む編集用ソースは公開リポジトリに含めない。
+# 各自ローカルに保管し、編集後 `node build.mjs` で js/questions.js を生成して push する。
+questions.src.js
+
+.DS_Store

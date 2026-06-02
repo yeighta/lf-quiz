@@ -1,11 +1,15 @@
 /* ============================================================
  *  LF QUIZ - アプリロジック
  *  ・1問ずつ回答し、最後に正解数のみ表示(どれが正解かは出さない)
- *  ・問題データは questions.js (QUIZ_QUESTIONS / PRIZE_TIERS)
+ *  ・問題データは js/questions.js (QUIZ_QUESTIONS。正解はハッシュ h のみ)
+ *  ・採点は選択肢を同じSALTでハッシュ化し h と照合して行う
  * ============================================================ */
 
 (function () {
   "use strict";
+
+  /* build.mjs の SALT と必ず一致させること(ハッシュ照合に使用) */
+  const SALT = "lf-flame-2026-anniv";
 
   /* 回答済み記録のキー。問題を大幅に入れ替えて再挑戦を許可したい場合は
      末尾の番号(v1)を上げると、全員が再度挑戦できるようになります。 */
@@ -31,11 +35,8 @@
     question: document.getElementById("question"),
     choices: document.getElementById("choices"),
     nextBtn: document.getElementById("next-btn"),
-    resultTier: document.getElementById("result-tier"),
-    resultTierLabel: document.getElementById("result-tier-label"),
     scoreNum: document.getElementById("score-num"),
     scoreTotal: document.getElementById("score-total"),
-    resultDesc: document.getElementById("result-desc"),
     resultDone: document.getElementById("result-done"),
   };
 
@@ -58,6 +59,17 @@
     }
   }
 
+  /* SHA-256 を16進文字列で返す(build.mjs と同一アルゴリズム) */
+  async function sha256hex(str) {
+    const buf = await crypto.subtle.digest(
+      "SHA-256",
+      new TextEncoder().encode(str)
+    );
+    return Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
+
   el.qTotal.textContent = total;
   el.scoreTotal.textContent = "/ " + total;
 
@@ -72,7 +84,7 @@
     const marks = ["A", "B", "C", "D"];
 
     el.qCurrent.textContent = current + 1;
-    el.barFill.style.width = ((current) / total) * 100 + "%";
+    el.barFill.style.width = (current / total) * 100 + "%";
     el.question.textContent = q.question;
 
     el.choices.innerHTML = "";
@@ -90,8 +102,7 @@
     });
 
     el.nextBtn.disabled = answers[current] === null;
-    el.nextBtn.textContent =
-      current === total - 1 ? "結果を見る" : "次へ";
+    el.nextBtn.textContent = current === total - 1 ? "結果を見る" : "次へ";
   }
 
   function selectChoice(i) {
@@ -112,34 +123,29 @@
     }
   }
 
-  function calcScore() {
-    return answers.reduce(
-      (acc, a, i) => acc + (a === QUIZ_QUESTIONS[i].answer ? 1 : 0),
-      0
-    );
-  }
-
-  function resolveTier(score) {
-    return (
-      PRIZE_TIERS.find((t) => score >= t.min) ||
-      PRIZE_TIERS[PRIZE_TIERS.length - 1]
-    );
+  /* 選択肢を同じSALTでハッシュ化し、保存された h と照合して正解数を数える */
+  async function calcScore() {
+    let score = 0;
+    for (let i = 0; i < total; i++) {
+      const sel = answers[i];
+      if (sel === null) continue;
+      const h = await sha256hex(SALT + "|" + i + "|" + QUIZ_QUESTIONS[i].choices[sel]);
+      if (h === QUIZ_QUESTIONS[i].h) score += 1;
+    }
+    return score;
   }
 
   /** 結果画面を描画する。already=true は回答済み記録からの再表示 */
   function renderResult(score, already) {
-    const tier = resolveTier(score);
     el.barFill.style.width = "100%";
     el.scoreNum.textContent = score;
-    el.resultTier.textContent = tier.title;
-    el.resultTierLabel.textContent = tier.label;
-    el.resultDesc.textContent = tier.desc;
     el.resultDone.hidden = !already;
     showScreen("result");
   }
 
-  function showResult() {
-    const score = calcScore();
+  async function showResult() {
+    el.nextBtn.disabled = true;
+    const score = await calcScore();
     saveDone(score);
     renderResult(score, false);
   }
