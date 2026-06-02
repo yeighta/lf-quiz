@@ -7,6 +7,10 @@
 (function () {
   "use strict";
 
+  /* 回答済み記録のキー。問題を大幅に入れ替えて再挑戦を許可したい場合は
+     末尾の番号(v1)を上げると、全員が再度挑戦できるようになります。 */
+  const STORAGE_KEY = "lf-quiz-done-v1";
+
   const total = QUIZ_QUESTIONS.length;
 
   /** 回答インデックスを保持 (未回答は null) */
@@ -32,8 +36,27 @@
     scoreNum: document.getElementById("score-num"),
     scoreTotal: document.getElementById("score-total"),
     resultDesc: document.getElementById("result-desc"),
-    retryBtn: document.getElementById("retry-btn"),
+    resultDone: document.getElementById("result-done"),
   };
+
+  /* localStorage 安全アクセス(プライベートモード等で例外が出ても落ちないように) */
+  function saveDone(score) {
+    try {
+      localStorage.setItem(STORAGE_KEY, String(score));
+    } catch (e) {
+      /* 保存できない環境では再回答防止は効かないが、進行は妨げない */
+    }
+  }
+  function loadDone() {
+    try {
+      const v = localStorage.getItem(STORAGE_KEY);
+      if (v === null) return null;
+      const n = parseInt(v, 10);
+      return isNaN(n) ? null : n;
+    } catch (e) {
+      return null;
+    }
+  }
 
   el.qTotal.textContent = total;
   el.scoreTotal.textContent = "/ " + total;
@@ -103,23 +126,22 @@
     );
   }
 
-  function showResult() {
-    const score = calcScore();
+  /** 結果画面を描画する。already=true は回答済み記録からの再表示 */
+  function renderResult(score, already) {
     const tier = resolveTier(score);
-
     el.barFill.style.width = "100%";
     el.scoreNum.textContent = score;
     el.resultTier.textContent = tier.title;
     el.resultTierLabel.textContent = tier.label;
     el.resultDesc.textContent = tier.desc;
-
+    el.resultDone.hidden = !already;
     showScreen("result");
   }
 
-  function reset() {
-    answers.fill(null);
-    current = 0;
-    showScreen("start");
+  function showResult() {
+    const score = calcScore();
+    saveDone(score);
+    renderResult(score, false);
   }
 
   // --- イベント ---
@@ -128,5 +150,12 @@
     renderQuestion();
   });
   el.nextBtn.addEventListener("click", goNext);
-  el.retryBtn.addEventListener("click", reset);
+
+  // --- 初期化: 既に回答済みなら結果画面を直接表示し、再回答を防ぐ ---
+  (function init() {
+    const done = loadDone();
+    if (done !== null) {
+      renderResult(done, true);
+    }
+  })();
 })();

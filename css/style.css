@@ -353,16 +353,17 @@ body {
   max-width: 320px;
 }
 
-.result__retry {
-  background: none;
-  border: none;
-  color: var(--cream-dim);
+.result__done {
+  color: var(--gold);
   font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  cursor: pointer;
-  margin-top: 18px;
+  letter-spacing: 0.08em;
+  margin: 18px auto 0;
+  max-width: 320px;
+}
+
+.rules li b {
+  color: var(--gold);
+  font-weight: 600;
 }
 
 /* ---------- フッター ---------- */
