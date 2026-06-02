@@ -60,13 +60,13 @@ const QUIZ_QUESTIONS = [
     h: "eb2bb40c4752023316472084b2319c5a4123522fae5747cbb6eb5bea8eaad306",
   },
   {
-    question: "【ダミー】後で問題を差し替えてください",
-    choices: ["選択肢1","選択肢2","選択肢3","選択肢4"],
-    h: "734d9cf83c211ef7de1410bd5f7e19a522e37dd6d794eb4f80d2809150024485",
+    question: "ことがボウルに入れがちなフレーバーは？",
+    choices: ["Lemon Mint","Kiwi","Passionfruit","Lychee"],
+    h: "a1a92271e4d1995fb3bd7c52aee6299e1fbcccd87cb36a67f6ee7bca66e5fce3",
   },
   {
-    question: "【ダミー】後で問題を差し替えてください",
-    choices: ["選択肢1","選択肢2","選択肢3","選択肢4"],
-    h: "f6e10feb39ab3d8f4c62159ec5340398666ea2a5179af2ae819f405f48b9cab4",
+    question: "ことの絶妙にしょうもない特殊能力とは？",
+    choices: ["常連さんの足音で誰かわかる","オーナーに話しかけるタイミングを見極められる","風邪を引くであろうタイミングがわかる","炭の減り具合を勘で当てられる"],
+    h: "f0c0b450a45d977bff6cbb6b8de84b84f228fc848a0b2f962c66a85ec3211ac2",
   },
 ];
